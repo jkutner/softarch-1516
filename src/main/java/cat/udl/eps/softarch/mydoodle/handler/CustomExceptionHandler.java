@@ -1,5 +1,6 @@
 package cat.udl.eps.softarch.mydoodle.handler;
 
+import cat.udl.eps.softarch.mydoodle.exceptions.InvalidKeyException;
 import com.google.common.io.CharStreams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ import javax.validation.ConstraintViolationException;
  */
 
 @ControllerAdvice
-class CustomExceptionHandler {
+public class CustomExceptionHandler {
     final Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -58,6 +59,14 @@ class CustomExceptionHandler {
         return new ErrorInfo(HttpStatus.BAD_REQUEST, request, e);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseBody
+    public ErrorInfo handleInvalidArgumentException(HttpServletRequest request, IllegalArgumentException e) {
+        logger.info("Generating HTTP BAD REQUEST from IllegalArgumentException: {}", e.toString());
+        return new ErrorInfo(HttpStatus.BAD_REQUEST, request, e);
+    }
+
     @ExceptionHandler(TransactionSystemException.class)
     @ResponseBody
     public ErrorInfo handleTxException(HttpServletRequest request, HttpServletResponse response, TransactionSystemException e) {
@@ -68,6 +77,14 @@ class CustomExceptionHandler {
         }
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         return new ErrorInfo(HttpStatus.INTERNAL_SERVER_ERROR, request, (Exception) e.getCause().getCause());
+    }
+
+    @ExceptionHandler(InvalidKeyException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public ErrorInfo handleInvalidKeyException(HttpServletRequest request, InvalidKeyException e){
+        logger.info("Handling invalid key exception: {}", e.toString());
+        return new ErrorInfo(HttpStatus.UNAUTHORIZED, request, e);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
