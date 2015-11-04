@@ -1,13 +1,16 @@
+angular.module('webappApp', ['ngAnimate', 'ui.bootstrap']);
 
 angular.module('webappApp')
   .controller('timeslotcontroller', function($scope, addtimeslot) {
+    "use strict";
     addtimeslot.query()
       .$promise.then(function (timeslot) {
         $scope.meetings = timeslot._embeddedItems;
       });
   });
 
-angular.module('webappApp').controller('DatepickerCtrl', function ($scope) {
+angular.module('ui.bootstrap.datepicker').controller('DatepickerCtrl', function ($scope) {
+  "use strict";
   $scope.today = function() {
     $scope.dt = new Date();
   };
@@ -78,6 +81,7 @@ angular.module('webappApp').controller('DatepickerCtrl', function ($scope) {
 });
 
 angular.module('uwebappApp').controller('TimepickeCtrl', function ($scope) {
+  "use strict";
   $scope.mytime = new Date();
 
   $scope.hstep = 1;

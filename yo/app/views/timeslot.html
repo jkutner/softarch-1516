@@ -1,0 +1,13 @@
+<table class="table">
+  <tr>
+    <td><h3>All TimeSlots</h3></td>
+    <td></td>
+  </tr>
+  <tr ng-repeat="timeslot in timeslot">
+    <td>{{timeslot.MeetingProposal.title}}</td>
+    <td>
+      <a class="btn btn-danger"  ng-click="deleteTimeslot(timeslot)">Delete</a>
+    </td>
+  </tr>
+</table>
+<a class="btn btn-primary"  ng-click="addtimeslot">Add TimeSlot</a>

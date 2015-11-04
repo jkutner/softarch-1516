@@ -37,9 +37,17 @@ angular
         url: '/meetings/:id/edit',
         templateUrl: 'views/meeting-edit.html',
         controller: 'MeetingEditController' })
+      .state('listTimeSlots', {//state for showing all timeslot
+        url: '/timeSlots',
+        templateUrl: 'views/timeslot.html',
+        controller: 'timeslotcontroller' })
+      .state('addtimeslot', {
+        url: '/timeSlots/add',
+        templateUrl: 'views/addtimeslot.html',
+        controller: 'timeslotcontroller'});
   })
   .run(function($state) {
-    $state.go('meetings'); //make a transition to meetings state when app starts
+    $state.go('listTimeSlots'); //make a transition to meetings state when app starts
   })
   .config(function (SpringDataRestInterceptorProvider) {
     SpringDataRestInterceptorProvider.apply();
