@@ -5,45 +5,45 @@ angular.module('webappApp')
     "use strict";
     addtimeslot.query()
       .$promise.then(function (timeslot) {
-        $scope.meetings = timeslot._embeddedItems;
+        $scope.timeslots = timeslot._embeddedItems;
       });
   });
 
-angular.module('ui.bootstrap.datepicker').controller('DatepickerCtrl', function ($scope) {
+angular.module('webappApp').controller('DatepickerCtrl', function ($scopet) {
   "use strict";
-  $scope.today = function() {
-    $scope.dt = new Date();
+  $scopet.today = function() {
+    $scopet.dt = new Date();
   };
-  $scope.today();
+  $scopet.today();
 
-  $scope.clear = function () {
-    $scope.dt = null;
+  $scopet.clear = function () {
+    $scopet.dt = null;
   };
 
   // Disable weekend selection
-  $scope.disabled = function(date, mode) {
+  $scopet.disabled = function(date, mode) {
     return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
   };
 
-  $scope.toggleMin = function() {
-    $scope.minDate = $scope.minDate ? null : new Date();
+  $scopet.toggleMin = function() {
+    $scopet.minDate = $scope.minDate ? null : new Date();
   };
-  $scope.toggleMin();
-  $scope.maxDate = new Date(2020, 5, 22);
+  $scopet.toggleMin();
+  $scopet.maxDate = new Date(2020, 5, 22);
 
-  $scope.setDate = function(year, month, day) {
-    $scope.dt = new Date(year, month, day);
+  $scopet.setDate = function(year, month, day) {
+    $scopet.dt = new Date(year, month, day);
   };
 
-  $scope.dateOptions = {
+  $scopet.dateOptions = {
     formatYear: 'yy',
     startingDay: 1
   };
 
-  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-  $scope.format = $scope.formats[0];
+  $scopet.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+  $scopet.format = $scope.formats[0];
 
-  $scope.status = {
+  $scopet.status = {
     opened: false
   };
 
@@ -51,7 +51,7 @@ angular.module('ui.bootstrap.datepicker').controller('DatepickerCtrl', function 
   tomorrow.setDate(tomorrow.getDate() + 1);
   var afterTomorrow = new Date();
   afterTomorrow.setDate(tomorrow.getDate() + 2);
-  $scope.events =
+  $scopet.events =
     [
       {
         date: tomorrow,
@@ -63,40 +63,43 @@ angular.module('ui.bootstrap.datepicker').controller('DatepickerCtrl', function 
       }
     ];
 
-  $scope.getDayClass = function(date, mode) {
+  $scopet.getDayClass = function(date, mode) {
     if (mode === 'day') {
       var dayToCheck = new Date(date).setHours(0,0,0,0);
 
-      for (var i=0;i<$scope.events.length;i++){
-        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+      for (var i=0;i<$scopet.events.length;i++){
+        var currentDay = new Date($scopet.events[i].date).setHours(0,0,0,0);
 
         if (dayToCheck === currentDay) {
-          return $scope.events[i].status;
+          return $scopet.events[i].status;
         }
       }
     }
-
     return '';
   };
 });
 
-angular.module('uwebappApp').controller('TimepickeCtrl', function ($scope) {
+angular.module('uwebappApp').controller('TimepickerCtrl', function ($scopeh, $log) {
   "use strict";
-  $scope.mytime = new Date();
+  $scopeh.mytime = new Date();
 
-  $scope.hstep = 1;
-  $scope.mstep = 30;
+  $scopeh.hstep = 1;
+  $scopeh.mstep = 30;
 
-  $scope.ismeridian = false;
+  $scopeh.ismeridian = false;
 
-  $scope.update = function() {
+  $scopeh.update = function() {
     var d = new Date();
     d.setHours( 14 );
     d.setMinutes( 0 );
-    $scope.mytime = d;
+    $scopeh.mytime = d;
   };
 
-  $scope.clear = function() {
-    $scope.mytime = null;
+  $scopeh.changed = function () {
+    $log.log('Time changed to: ' + $scopeh.mytime);
+  };
+
+  $scopeh.clear = function() {
+    $scopeh.mytime = null;
   };
 });

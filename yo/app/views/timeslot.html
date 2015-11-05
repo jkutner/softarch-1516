@@ -3,7 +3,7 @@
     <td><h3>All TimeSlots</h3></td>
     <td></td>
   </tr>
-  <tr ng-repeat="timeslot in timeslot">
+  <tr ng-repeat="timeslot in timeslots">
     <td>{{timeslot.MeetingProposal.title}}</td>
     <td>
       <a class="btn btn-danger"  ng-click="deleteTimeslot(timeslot)">Delete</a>
